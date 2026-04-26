@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuroScan — Brain Tumor Detection</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── Scanline overlay ── -->
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- ── Header ── -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo-group">
+        <div class="logo-pulse"></div>
+        <span class="logo-text">NEURO<span class="accent">SCAN</span></span>
+        <span class="logo-tag">v1.0 // Brain Tumor Detection</span>
+      </div>
+      <div class="header-status">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText" class="status-text">SYSTEM READY</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Main Layout ── -->
+  <main class="main-grid">
+
+    <!-- ────────────────── LEFT PANEL: Controls ────────────────── -->
+    <aside class="panel panel--controls">
+      <div class="panel-header">
+        <span class="panel-label">// CONFIGURATION</span>
+      </div>
+
+      <!-- Model Selector -->
+      <div class="control-section">
+        <label class="ctrl-label">SELECT MODEL</label>
+        <div class="select-wrapper">
+          <select id="modelSelect" class="ctrl-select">
+            <option value="">— loading models —</option>
+          </select>
+          <span class="select-arrow">▼</span>
+        </div>
+        <div id="modelMeta" class="model-meta hidden"></div>
+      </div>
+
+      <!-- Image Upload -->
+      <div class="control-section">
+        <label class="ctrl-label">UPLOAD MRI SCAN</label>
+        <div class="drop-zone" id="dropZone">
+          <input type="file" id="fileInput" accept=".png,.jpg,.jpeg,.bmp,.tiff,.webp" hidden />
+          <div class="drop-icon">⬡</div>
+          <p class="drop-text">Drag &amp; drop image<br/><span class="drop-sub">or click to browse</span></p>
+          <div class="drop-preview hidden" id="dropPreview">
+            <img id="previewImg" alt="Preview" />
+            <span id="previewName" class="preview-name"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Run Button -->
+      <button class="run-btn" id="runBtn" disabled>
+        <span class="run-btn-inner">
+          <span class="run-icon">◈</span>
+          <span id="runBtnText">RUN ANALYSIS</span>
+        </span>
+      </button>
+
+      <!-- Progress Bar -->
+      <div class="progress-wrap hidden" id="progressWrap">
+        <div class="progress-bar" id="progressBar"></div>
+        <span class="progress-label" id="progressLabel">Initializing…</span>
+      </div>
+    </aside>
+
+    <!-- ────────────────── RIGHT PANEL: Results ────────────────── -->
+    <section class="panel panel--results">
+      <div class="panel-header">
+        <span class="panel-label">// ANALYSIS RESULTS</span>
+        <span class="panel-hint" id="resultHint">Upload an image and run analysis to begin.</span>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">🧠</div>
+        <p>No scan analyzed yet.<br/>Configure the model and upload an MRI.</p>
+      </div>
+
+      <!-- Results Content (hidden until analysis runs) -->
+      <div class="results-content hidden" id="resultsContent">
+
+        <!-- Prediction Banner -->
+        <div class="prediction-banner" id="predictionBanner">
+          <div class="pred-left">
+            <span class="pred-label">DIAGNOSIS</span>
+            <span class="pred-class" id="predClass">—</span>
+          </div>
+          <div class="pred-right">
+            <span class="pred-label">CONFIDENCE</span>
+            <span class="pred-conf" id="predConf">—</span>
+          </div>
+          <div class="pred-indicator" id="predIndicator"></div>
+        </div>
+
+        <!-- Image Comparison -->
+        <div class="image-row">
+          <div class="image-card">
+            <div class="image-card-label">ORIGINAL SCAN</div>
+            <div class="image-card-body">
+              <img id="imgOriginal" alt="Original MRI" />
+            </div>
+          </div>
+          <div class="image-card image-card--enhanced">
+            <div class="image-card-label">ENHANCED + <span class="accent">ANALYSIS OVERLAY</span></div>
+            <div class="image-card-body">
+              <img id="imgOverlay" alt="Analysis overlay" />
+              <div class="image-badge" id="imageBadge"></div>
+            </div>
+          </div>
+          <div class="image-card">
+            <div class="image-card-label">IFFT RECONSTRUCTED</div>
+            <div class="image-card-body">
+              <img id="imgEnhanced" alt="IFFT Enhanced MRI" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Confidence Chart -->
+        <div class="confidence-section">
+          <div class="conf-header">CLASS CONFIDENCE BREAKDOWN</div>
+          <div class="conf-bars" id="confBars"></div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="footer">
+    <span>NEURO<span class="accent">SCAN</span> // Deep Learning Brain Tumor Detection //
+      EfficientNet-B0 + GradCAM + IFFT Reconstruction
+    </span>
+    <span class="footer-right">CPU Inference // Potato-PC Friendly ✓</span>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

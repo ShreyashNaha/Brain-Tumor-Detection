@@ -1,0 +1,23 @@
+brain-tumor-detection/
+│
+├── notebook/
+│   └── train_model.ipynb        ← Google Colab training notebook
+│
+├── app/
+│   ├── app.py                   ← Flask backend
+│   ├── pipeline.py              ← Inference + IFFT reconstruction pipeline
+│   ├── model_utils.py           ← Model loader utility
+│   │
+│   ├── models/                  ← Drop your .pth files here
+│   │   └── (your trained model.pth)
+│   │
+│   ├── uploads/                 ← Temp uploaded MRI images
+│   │
+│   ├── static/
+│   │   ├── css/style.css
+│   │   └── js/main.js
+│   │
+│   └── templates/
+│       └── index.html
+│
+└── requirements.txt
